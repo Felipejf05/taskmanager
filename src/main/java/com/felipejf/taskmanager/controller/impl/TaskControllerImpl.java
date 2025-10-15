@@ -5,7 +5,6 @@ import com.felipejf.taskmanager.dtos.request.TaskRequestDTO;
 import com.felipejf.taskmanager.dtos.response.TaskListResponse;
 import com.felipejf.taskmanager.dtos.response.TaskResponseDTO;
 import com.felipejf.taskmanager.entity.Task;
-import com.felipejf.taskmanager.exceptions.ResourceNotFoundException;
 import com.felipejf.taskmanager.mapper.TaskMapper;
 import com.felipejf.taskmanager.service.TaskService;
 import lombok.RequiredArgsConstructor;
@@ -14,7 +13,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequiredArgsConstructor
