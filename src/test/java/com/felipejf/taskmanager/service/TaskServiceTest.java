@@ -70,10 +70,9 @@ class TaskServiceTest {
     void shouldFindTaskById() {
         when(taskRepository.findById(1L)).thenReturn(Optional.of(task));
 
-        Optional<Task> found = taskService.findById(1L);
+        Task found = taskService.findById(1L);
 
-        assertTrue(found.isPresent());
-        assertEquals("Estudar Java", found.get().getTitle());
+        assertEquals("Estudar Java", found.getTitle());
         verify(taskRepository, times(1)).findById(1L);
     }
 

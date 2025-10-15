@@ -1,6 +1,7 @@
 package com.felipejf.taskmanager.service;
 
 import com.felipejf.taskmanager.entity.Task;
+import com.felipejf.taskmanager.exceptions.ResourceNotFoundException;
 import com.felipejf.taskmanager.repository.TaskRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -27,9 +28,10 @@ public class TaskService {
         return taskRepository.findAll();
     }
 
-    public Optional<Task> findById(Long id){
+    public Task findById(Long id){
         log.info("Encontrando tarefa pelo id: {}", id);
-        return taskRepository.findById(id);
+        return taskRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Tarefa não encontrada com o ID: " + id));
     }
 
     public void deleteTask(Long id){
@@ -52,6 +54,6 @@ public class TaskService {
 
                     return saved;
                 })
-                .orElseThrow(() -> new IllegalArgumentException("Tarefa com o ID " + id + "não encontrada."));
+                .orElseThrow(() -> new ResourceNotFoundException("Tarefa com o ID " + id + "não encontrada."));
     }
 }
