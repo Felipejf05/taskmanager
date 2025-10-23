@@ -16,7 +16,6 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.never;
@@ -70,10 +69,9 @@ class TaskServiceTest {
     void shouldFindTaskById() {
         when(taskRepository.findById(1L)).thenReturn(Optional.of(task));
 
-        Optional<Task> found = taskService.findById(1L);
+        Task found = taskService.findById(1L);
 
-        assertTrue(found.isPresent());
-        assertEquals("Estudar Java", found.get().getTitle());
+        assertEquals("Estudar Java", found.getTitle());
         verify(taskRepository, times(1)).findById(1L);
     }
 
