@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -43,6 +44,13 @@ public interface TaskController {
                     schema = @Schema(implementation = TaskResponseDTO.class)))
     @ApiResponse(responseCode = "401", description = "Tarefa não encontrada")
     ResponseEntity<TaskResponseDTO> getTaskId(@PathVariable Long id);
+
+    @PutMapping("/{id}")
+    @Operation(summary = "Atualiza as informações da tarefa")
+    @ApiResponse(responseCode = "200", description = "Tarefa atualizada com sucesso",
+                content = @Content(mediaType = APPLICATION_JSON_VALUE, schema = @Schema(implementation = TaskResponseDTO.class)))
+    @ApiResponse(responseCode = "404", description = "Tarefa não encontrada")
+    ResponseEntity<TaskResponseDTO> updateTask(@PathVariable Long id, @Valid @RequestBody TaskRequestDTO taskRequestDTO);
 
     @DeleteMapping("/{id}")
     @Operation(summary = "Delete uma tarefa pelo ID")

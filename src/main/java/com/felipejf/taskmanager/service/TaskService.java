@@ -17,28 +17,23 @@ public class TaskService {
 
     private final TaskRepository taskRepository;
 
-    public Task addTask(Task task){
+    public Task addTask(Task task) {
         log.info("Iniciando a criação da tarefa: {}", task);
         return taskRepository.save(task);
     }
 
-    public List<Task> getTasks(){
+    public List<Task> getTasks() {
         log.info("Listando as tarefas");
         return taskRepository.findAll();
     }
 
-    public Task findById(Long id){
+    public Task findById(Long id) {
         log.info("Encontrando tarefa pelo id: {}", id);
         return taskRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Tarefa não encontrada com o ID: " + id));
     }
 
-    public void deleteTask(Long id){
-        log.info("Deletando tarefa com o id: {}", id);
-        taskRepository.deleteById(id);
-    }
-
-    public Task updateTask(Long id, Task updateTask){
+    public Task updateTask(Long id, Task updateTask) {
         log.info("Atualizando a tarefa com o id: {}", id);
 
         return taskRepository.findById(id)
@@ -54,5 +49,14 @@ public class TaskService {
                     return saved;
                 })
                 .orElseThrow(() -> new ResourceNotFoundException("Tarefa com o ID " + id + "não encontrada."));
+    }
+
+    public void deleteTask(Long id) {
+        log.info("Deletando tarefa com o id: {}", id);
+
+        Task task = taskRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Tarefa com o ID " + id + "Não encontrada"));
+        taskRepository.delete(task);
+        log.info("Tarefa deletada com sucesso: {}", id);
     }
 }
