@@ -12,7 +12,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
@@ -47,14 +46,8 @@ public class TaskControllerImpl implements TaskController {
 
     @Override
     public ResponseEntity<TaskResponseDTO> updateTask(Long id, TaskRequestDTO taskRequestDTO) {
-        Task updateData = new Task();
-        updateData.setTitle(taskRequestDTO.getTitle());
-        updateData.setDescription(taskRequestDTO.getDescription());
-        updateData.setStatus(taskRequestDTO.getStatus());
-        updateData.setUpdatedAt(LocalDateTime.now());
-
+        Task updateData = taskMapper.toTask(taskRequestDTO);
         Task updateTask = taskService.updateTask(id, updateData);
-
         return ResponseEntity.ok(taskMapper.toResponseDTO(updateTask));
     }
 
